@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선협보록: 천지개벽</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;500;900&family=Exo+2:ital,wght@1,300&display=swap');
+
+        :root {
+            --paper-dark: #d6cfbe;
+            --paper-light: #fdfaf1;
+            --ink: #1a1a1b;
+            --jade: #004d33;
+            --cinnabar: #8c1c1c;
+            --gold: #a67c00;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Noto Serif KR', serif; 
+            background-color: var(--ink); 
+            color: #ffffff; 
+            overflow-x: hidden;
+        }
+
+        /* 고정 배경 이미지 */
+        .fixed-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
+                        url('https://github.com/ggim17110-star/292/blob/main/0.7__cartoon__%2C%200.5__realistic__%2C____artist_pigeon666%2C(artist_mikozin)%2C(artist_s%20s-2082195728.png?raw=true') no-repeat center center;
+            background-size: cover; z-index: -1;
+        }
+
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom: 2px solid var(--gold);
+            backdrop-filter: blur(10px);
+        }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto;
+            display: flex; justify-content: space-between; padding: 15px 40px;
+        }
+        .logo { font-weight: 900; font-size: 1.4rem; color: #ffffff; letter-spacing: 5px; }
+        .tab-group { display: flex; gap: 20px; }
+        .tab-link { 
+            cursor: pointer; font-weight: 700; font-size: 0.95rem; 
+            transition: 0.3s; color: #ffffff; text-transform: uppercase;
+        }
+        .tab-link:hover, .tab-link.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+        .hero {
+            height: 40vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; position: relative;
+        }
+        .hero-content h1 { font-size: 3.5rem; font-weight: 900; color: #fff; letter-spacing: 20px; text-shadow: 0 0 20px #000; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+
+        .section { display: none; animation: fadeIn 0.8s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 제목 스타일 */
+        h2 { 
+            font-size: 2.5rem; color: #ffffff !important; font-weight: 900; 
+            text-align: center; margin-bottom: 50px; text-shadow: 2px 2px 10px #000;
+        }
+
+        /* [TAB 1] 천지개벽 - 네모칸 상자 */
+        .lore-box {
+            background: var(--paper-light); border: 1px solid var(--gold);
+            padding: 40px; margin-bottom: 40px; box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
+            position: relative; line-height: 2.2; color: var(--ink); 
+        }
+        .lore-box::before {
+            content: ""; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(166, 124, 0, 0.2); pointer-events: none;
+        }
+        .chapter-title { font-size: 1.6rem; font-weight: 900; color: var(--cinnabar); margin-bottom: 20px; display: block; border-bottom: 2px solid var(--cinnabar); padding-bottom: 5px; }
+        .chapter-body { text-align: justify; font-size: 1.15rem; }
+        .highlight { color: var(--cinnabar); font-weight: 700; }
+        .outro-box { background: rgba(255,255,255,0.1); color: #ffffff; padding: 40px; border-left: 10px solid var(--gold); font-style: italic; line-height: 2; backdrop-filter: blur(5px); margin-bottom: 40px; }
+
+        /* [TAB 2] 경지 */
+        .stages-path { position: relative; padding: 40px 0; }
+        .stages-path::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--gold); }
+        .stage-node { margin-bottom: 60px; position: relative; width: 50%; padding: 20px 50px; }
+        .stage-node:nth-child(odd) { left: 0; text-align: right; }
+        .stage-node:nth-child(even) { left: 50%; text-align: left; }
+        .stage-node::after { content: ""; position: absolute; width: 20px; height: 20px; background: var(--gold); border: 4px solid var(--ink); border-radius: 50%; top: 30px; }
+        .stage-node:nth-child(odd)::after { right: -11px; }
+        .stage-node:nth-child(even)::after { left: -11px; }
+        .stage-node h3 { font-size: 1.8rem; color: #ffffff; font-weight: 900; margin-bottom: 10px; }
+        .stage-node p { font-size: 1rem; color: var(--ink); background: var(--paper-light); padding: 15px; border-radius: 5px; }
+
+        /* [TAB 3] 현운대륙 */
+        .world-intro-card { margin-bottom: 50px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; align-items: center; color: #ffffff; }
+        .world-intro-card h3 { color: var(--gold); font-size: 2rem; margin-bottom: 15px; }
+        .sect-display { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .sect-item { background: var(--paper-light); border: 1px solid var(--gold); overflow: hidden; color: var(--ink); }
+        .sect-item img { width: 100%; height: 250px; object-fit: cover; border-bottom: 1px solid var(--gold); }
+        .sect-item-body { padding: 20px; }
+        .sect-item-body h4 { color: var(--cinnabar); font-weight: 900; font-size: 1.3rem; margin-bottom: 10px; }
+
+        /* [TAB 4] 선인록 */
+        .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
+        .char-card { background: var(--paper-light); border: 1px solid var(--gold); cursor: pointer; transition: 0.3s; overflow: hidden; color: var(--ink); }
+        .char-card:hover { border-color: #fff; transform: translateY(-5px); }
+        .char-card img { width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid var(--gold); }
+        .char-card-body { padding: 15px; text-align: center; }
+        .char-card-body span { font-size: 0.8rem; color: var(--gold); font-weight: bold; }
+
+        /* 모달 */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal.active { display: flex; }
+        .modal-box { background: var(--paper-light); max-width: 900px; width: 100%; display: grid; grid-template-columns: 1.1fr 1.5fr; border: 5px solid var(--gold); color: var(--ink); }
+        .modal-img { height: 100%; min-height: 500px; background-size: cover; background-position: center; border-right: 2px solid var(--gold); }
+        .modal-body { padding: 40px; position: relative; overflow-y: auto; max-height: 90vh; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2.5rem; border: none; background: none; cursor: pointer; color: var(--cinnabar); }
+
+        @media (max-width: 850px) { .modal-box, .sect-display, .world-intro-card, .stage-node { grid-template-columns: 1fr !important; width: 100% !important; left: 0 !important; text-align: left !important; } .modal-img { height: 300px; min-height: auto; } }
+    </style>
+</head>
+<body>
+
+    <div class="fixed-bg"></div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">萬九道心</div>
+            <div class="tab-group">
+                <div class="tab-link active" onclick="showSection('intro')">천지개벽</div>
+                <div class="tab-link" onclick="showSection('stages')">경지</div>
+                <div class="tab-link" onclick="showSection('world')">현운대륙</div>
+                <div class="tab-link" onclick="showSection('chars')">선인록</div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>萬九道心</h1>
+            <p>필멸의 굴레를 끊고 영겁을 찬탈하다</p>
+        </div>
+    </section>
+
+    <div class="container">
+        
+        <!-- SECTION 1: 천지개벽 -->
+        <section id="intro" class="section active">
+            <h2>선협(仙俠), 하늘의 권좌를 훔치는 길</h2>
+            <div class="lore-main">
+                <div class="lore-box" style="text-align: center; border-top: 8px solid var(--cinnabar);">
+                    <div class="chapter-body" style="font-size: 1.25rem; font-weight: 500;">
+                        필멸(必滅)의 삶이란 아침 이슬과 같고, 덧없는 목숨은 하루살이의 날갯짓과 다를 바 없다. <br>
+                        세상의 범인(凡人)들은 이 짧은 생을 운명이라 여기며 순응하고, 흙으로 돌아가는 것을 하늘의 이치라 부른다. <br><br>
+                        하나, 세상에는 그 이치를 거역하려는 자들이 있다. 썩어 문드러질 육신의 굴레를 벗어던지고, 유한한 수명의 족쇄를 끊어내며, 감히 영겁(永劫)의 시간을 탐하는 이들. 사람들은 그들을 일러 수사(修士), 혹은 도(道)를 묻는 자라 칭한다.
+                    </div>
+                </div>
+                <div class="lore-box">
+                    <span class="chapter-title">필멸을 벗는 과정, 수련(修煉)</span>
+                    <div class="chapter-body">
+                        수사의 시작은 천지(天地)에 가득한 영기(靈氣), 곧 세상의 숨결을 들이마시는 것에서 비롯된다. 이는 갓 태어난 아기가 첫 숨을 내쉬는 것과 같으니, 이를 <span class="highlight">연기(煉氣)</span>라 한다. 허나 들이쉬기만 할 뿐 그릇이 없다면 기(氣)는 안개처럼 흩어질 터, 단단한 기반을 쌓아 영력의 강을 가두는 것을 <span class="highlight">축기(築基)</span>라 이른다.<br><br>
+                        강물이 모여 구슬을 빚어내듯, 온몸의 영력을 단전(丹田)에 응축하여 하나의 <span class="highlight">금단(金丹)</span>을 맺는 것이 <span class="highlight">결단(結丹)</span>이요, 그 구슬이 깨어지며 제 모습을 닮은 작은 아이, 곧 불멸의 씨앗이 태어나는 경지가 <span class="highlight">원영(元嬰)</span>이다. 육신이 재가 되어도 원영만 있다면 능히 다른 육신을 취해 부활할 수 있으니, 이때부터 비로소 생사의 경계를 비웃게 되는 것이다.
+                    </div>
+                </div>
+                <div class="lore-box">
+                    <span class="chapter-title">힘이 곧 법이 되는 세계, 약육강식(弱肉强食)</span>
+                    <div class="chapter-body">
+                        도를 논하는 자들의 세계에 자비와 동정을 기대하지 말라. 영기를 품은 영맥(靈脈)은 유한하고, 경지를 높이는 천재지보(天才地寶)는 주인이 없다. 약한 자의 것은 곧 강한 자의 것이요, 문파 간의 다툼은 영토와 자원을 둔 짐승들의 싸움과 다를 바 없다.<br><br>
+                        수사의 눈에 범인의 목숨은 길가의 개미와 같아, 그들의 싸움에 휘말려 성(城) 하나가 통째로 증발하고 수십만 군중이 먼지로 변하여도 눈 한번 깜빡이지 않는다. 원한의 씨앗을 남기지 않기 위해 혈족과 문파, 나아가 고향의 흙까지 피로 적시는 것을 <span class="highlight">참초제근(斬草제根)</span>이라 하니, 이는 악행이 아니라 생존의 이치일 뿐이다.
+                    </div>
+                </div>
+                <div class="lore-box">
+                    <span class="chapter-title">하늘의 뜻을 거스르는 죄, 역천(逆天)</span>
+                    <div class="chapter-body">
+                        수련의 길은 본디 하늘의 뜻을 거스르는 대죄(大죄)이다. 필멸의 운명을 타고난 존재가 감히 불멸을 넘보는 것을 하늘은 결코 용납지 않는다. <br><br>
+                        수사가 경지의 벽을 넘어서려 할 때, 하늘은 무자비한 질투의 칼날을 내리니 이것이 바로 <span class="highlight">천겁(天劫)</span>이다. 시커먼 겁운(劫雲)이 몰려와 세상을 멸할 듯한 뇌화(雷火)를 쏟아내고, 수사는 그 아래에서 한낱 미물처럼 발버둥 쳐야만 한다. 겁(劫)을 넘어서면 새로운 경지를 얻지만, 패배한 자는 그 자리에서 혼비백산(魂飛魄散)하여 존재했다는 흔적조차 남지 않는다.
+                    </div>
+                </div>
+                <div class="outro-box">
+                    결국 선협의 길이 협(俠)의 길이라 착각하지 말지어다. 의(義)와 협(俠)은 유한한 삶을 사는 인간들의 자기 위안일 뿐, 영생을 좇는 자에게는 거추장스러운 족쇄에 불과하다. <br><br>
+                    이는 오직 나 자신의 존재를 영원으로 끌어올리기 위한 가장 이기적이고 처절한 투쟁이요, 하늘의 권좌를 찬탈하려는 가장 오만하고도 고독한 역천(逆天)의 대서사시일지니.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: 경지 -->
+        <section id="stages" class="section">
+            <h2>수행의 경지</h2>
+            <div class="stages-path">
+                <div class="stage-node"><h3>연기기 (鍊氣期)</h3><p>영기를 들이마셔 내공을 쌓는 입문의 단계.</p></div>
+                <div class="stage-node"><h3>축기기 (築基期)</h3><p>영력의 강을 가두는 그릇을 빚어 불멸의 기초를 다지는 경지.</p></div>
+                <div class="stage-node"><h3>결단기 (結丹期)</h3><p>단전에 금단을 맺어 수명을 500년으로 늘리는 고수의 반열.</p></div>
+                <div class="stage-node"><h3>원영기 (元嬰期)</h3><p>불멸의 씨앗 원영을 탄생시켜 생사를 초월하기 시작하는 경지.</p></div>
+                <div class="stage-node"><h3>화신기 (化神期)</h3><p>역천의 완성. 세계의 법칙을 개조하며 선계의 문턱에 서는 경지.</p></div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: 현운대륙 -->
+        <section id="world" class="section">
+            <h2>대륙의 형세 (玄雲大陸)</h2>
+            <div class="world-intro-card">
+                <div><h3>현운대륙 (소경계)</h3><p>세상의 끝이 존재하는 평평한 세계입니다. 끝은 짙은 검은 구름이 감싸고 있습니다.</p></div>
+                <img src="https://github.com/ggim17110-star/292/blob/main/0.7__cartoon__%2C%200.5__realistic__%2C____artist_pigeon666%2C(artist_mikozin)%2C(artist_s%20s-618273996.png?raw=true" style="width:100%; border: 1px solid var(--gold);">
+            </div>
+            <div class="sect-display">
+                <div class="sect-item">
+                    <img src="https://github.com/ggim17110-star/292/blob/main/0.7__cartoon__%2C%200.5__realistic__%2C____artist_pigeon666%2C(artist_mikozin)%2C(artist_s%20s-1751737759%20(3).png?raw=true">
+                    <div class="sect-item-body"><h4>청운세가</h4><p>정파수도연맹 주축. 정석적인 수도공법을 추구.</p></div>
+                </div>
+                <div class="sect-item">
+                    <img src="https://github.com/ggim17110-star/292/blob/main/0.7__cartoon__%2C%200.5__realistic__%2C____artist_pigeon666%2C(artist_mikozin)%2C(artist_s%20s-1751737759%20(4).png?raw=true">
+                    <div class="sect-item-body"><h4>혈음세가</h4><p>마도수선연맹 주축. 잔혹한 마공으로 탈취를 일삼음.</p></div>
+                </div>
+                <div class="sect-item">
+                    <img src="https://github.com/ggim17110-star/292/blob/main/0.7__cartoon__,%200.5__realistic__,____artist_pigeon666,(artist_mikozin),(artist_s%20s-627913878.png?raw=true">
+                    <div class="sect-item-body"><h4>환영문</h4><p>환술과 법보 제작의 대가. 영향력 상당.</p></div>
+                </div>
+                <div class="sect-item">
+                    <img src="https://github.com/ggim17110-star/292/blob/main/0.7__cartoon__%2C%200.5__realistic__%2C____artist_pigeon666%2C(artist_mikozin)%2C(artist_s%20s-2855052595.png?raw=true">
+                    <div class="sect-item-body"><h4>귀혼문</h4><p>사도 중립. 생사의 경계를 허무는 가장 오래된 문파.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: 선인록 -->
+        <section id="chars" class="section">
+            <h2>수행자 기록 (仙人錄)</h2>
+            <div class="char-grid" id="charContainer"></div>
+        </section>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal" id="charModal">
+        <div class="modal-box">
+            <div id="mImg" class="modal-img"></div>
+            <div class="modal-body">
+                <div class="close-btn" onclick="closeModal()">&times;</div>
+                <h3 id="mName" style="font-size: 2.5rem; color: var(--cinnabar); margin-bottom: 10px;"></h3>
+                <div id="mStage" style="font-weight: bold; color: var(--jade); margin-bottom: 20px;"></div>
+                <div id="mQuote" style="font-style:italic; border-left:3px solid var(--gold); padding-left:15px; margin-bottom:20px; color:var(--jade);"></div>
+                <div id="mText" style="line-height: 1.8; white-space: pre-wrap;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const characters = [
+            { name: "청운태룡", sect: "청운세가", role: "가주", stage: "화신 후기", quote: "규율은 세가를 지탱하는 뼈요, 오행은 세가를 흐르는 피니라.", text: "청운세가의 정점. 수명이 다해가고 있으며 냉정한 형면의 면모를 지님.", img: "https://github.com/ggim17110-star/292/blob/main/BZ18.png?raw=true" },
+            { name: "청운소소", sect: "청운세가", role: "소가주", stage: "결단 중기", quote: "수사께선 어떠한 연유로 본가를 방문하셨는지요?", text: "침착하고 고아한 말투를 가진 현명한 소가주.", img: "https://github.com/ggim17110-star/292/blob/main/S22.png?raw=true" },
+            { name: "혈음진현", sect: "혈음세가", role: "가주", stage: "화신 중기", quote: "힘없는 정의는 위선일 뿐, 힘이야말로 유일한 정의다.", text: "지배욕에 가득 찬 냉혹한 계략가.", img: "https://github.com/ggim17110-star/292/blob/main/JH15.png?raw=true" },
+            { name: "연비", sect: "혈음세가", role: "손녀", stage: "결단 초기", quote: "지루해. 그냥 다 부숴버리면 안 돼?", text: "환경에 의해 타락한 쾌락주의자.", img: "https://github.com/ggim17110-star/292/blob/main/Y04.png?raw=true" },
+            { name: "위연", sect: "환영문", role: "문주", stage: "화신 중기", quote: "진실이란 가장 믿고 싶어 하는 환영에 불과하답니다.", text: "음험하고 신비로운 분위기를 가진 환술의 대가.", img: "https://github.com/ggim17110-star/292/blob/main/E16.png?raw=true" },
+            { name: "월화", sect: "환영문", role: "시조", stage: "결단 중기", quote: "별이... 예쁜걸. 네 운명도 반짝이고 있어.", text: "고요하고 우아한 관조적 성격의 시조.", img: "https://github.com/ggim17110-star/292/blob/main/W08.png?raw=true" },
+            { name: "주귀현", sect: "귀혼문", role: "문주", stage: "화신 중기", quote: "망자들의 침묵이 훨씬 많은 것을 이야기한다.", text: "신비롭고 초월적인 귀도의 지배자.", img: "https://github.com/ggim17110-star/292/blob/main/GH01.png?raw=true" },
+            { name: "악수련", sect: "귀혼문", role: "수제자", stage: "축기 대원만", quote: "아, 아... 저... 그, 그게... 죄송합니다...", text: "내성적이고 소심한 귀도의 천재.", img: "https://github.com/ggim17110-star/292/blob/main/U09.png?raw=true" },
+            { name: "자사희", sect: "산수(요족)", role: "만화루주", stage: "원영 중기", quote: "대가 없는 하룻밤의 꿈은 없답니다.", text: "연제국 만화루를 지배하는 요수. 냉혹하고 계산적인 생존 본능.", img: "https://github.com/ggim17110-star/292/blob/main/J03.png?raw=true" }
+        ];
+
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+            if(event) event.target.classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function renderChars() {
+            const container = document.getElementById('charContainer');
+            characters.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'char-card';
+                card.innerHTML = `<img src="${c.img}"><div class="char-card-body"><span>${c.sect} | ${c.stage}</span><h4 style="color:var(--ink)">${c.name}</h4></div>`;
+                card.onclick = () => openModal(c);
+                container.appendChild(card);
+            });
+        }
+
+        function openModal(c) {
+            document.getElementById('mName').innerText = c.name;
+            document.getElementById('mStage').innerText = `${c.sect} | ${c.role} | ${c.stage}`;
+            document.getElementById('mQuote').innerText = `"${c.quote}"`;
+            document.getElementById('mText').innerText = c.text;
+            document.getElementById('mImg').style.backgroundImage = `url(${c.img})`;
+            document.getElementById('charModal').classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('charModal').classList.remove('active'); }
+
+        renderChars();
+    </script>
+</body>
+</html>
